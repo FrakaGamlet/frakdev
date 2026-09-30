@@ -19,6 +19,29 @@ services:
     networks:
       - frakdev
 
+  app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+
+    container_name: frakdev-app
+    restart: unless-stopped
+
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DATABASE_URL: ${DATABASE_URL}
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+    ports:
+      - "127.0.0.1:3000:3000"
+
+    networks:
+      - frakdev
+
 networks:
   frakdev:
     driver: bridge
