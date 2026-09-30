@@ -27,10 +27,12 @@ services:
     container_name: frakdev-app
     restart: unless-stopped
 
+    env_file:
+      - .env
+
     environment:
       NODE_ENV: production
       PORT: 3000
-      DATABASE_URL: ${DATABASE_URL}
 
     depends_on:
       postgres:
